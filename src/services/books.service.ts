@@ -9,6 +9,10 @@ interface CreateBookDTO {
 export const insertBook = async (bookRecord: CreateBookDTO) => {
   const db = await connectToDB();
   const collection = db.collection("books");
+  const { authorName } = bookRecord;
+  if (authorName) {
+    db.collection("author").findOne();
+  }
   const result = await collection.insertOne({
     ...bookRecord,
     createdAt: new Date(),
